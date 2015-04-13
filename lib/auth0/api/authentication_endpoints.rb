@@ -14,14 +14,14 @@ module Auth0
       end
 
       # {https://auth0.com/docs/auth-api#!#post--delegation}
-      def delegation(id_token, target, scope = "openid")
+      def delegation(id_token, target, scope = "openid", extra_parameters = {})
         request_params = {
                       client_id:  @client_id,
                       grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
                       id_token:   id_token,
                       target:     target,
                       scope:      scope
-        }
+        }.merge(extra_parameters)
         post("/delegation", request_params)
       end
 

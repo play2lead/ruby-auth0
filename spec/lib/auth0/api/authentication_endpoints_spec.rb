@@ -22,6 +22,13 @@ describe Auth0::Api::AuthenticationEndpoints do
       expect(@instance).to receive(:post).with("/delegation",{:client_id=>nil, :grant_type=>"urn:ietf:params:oauth:grant-type:jwt-bearer", :id_token=>"token", :target=>"target", :scope=>""})
       @instance.delegation("token", "target", "")
     end
+
+    it "allows to pass extra parameters" do
+      expect(@instance).to receive(:post).with("/delegation",{:client_id=>nil, :grant_type=>"urn:ietf:params:oauth:grant-type:jwt-bearer", 
+                                                              :id_token=>"", :target=>"", :scope=>"",
+                                                               :community_name => 'test-community', community_url: 'test-url'})
+      @instance.delegation("", "", "", community_name: 'test-community', community_url: 'test-url')
+    end
   end
 
   context ".login" do
